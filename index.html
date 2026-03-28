@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Contrato de Consignação</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 40px; background:#f5f5f5; }
+.container { background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
+input { width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:5px; }
+button { padding:10px 15px; margin-right:10px; border:none; border-radius:5px; cursor:pointer; }
+.btn-gerar { background:#28a745; color:#fff; }
+.btn-pdf { background:#007bff; color:#fff; }
+#contrato { margin-top:30px; line-height:1.6; color:#000; }
+h3 { margin-top:20px; }
+@media print {
+  button, input, h3 { display:none; }
+  body { background:#fff; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h2>Contrato de Consignação Mercantil</h2>
+
+<h3>Dados do Cliente</h3>
+<input id="razao" placeholder="Razão Social">
+<input id="cnpj" placeholder="CNPJ">
+<input id="endereco" placeholder="Endereço completo">
+
+<h3>Responsável Legal</h3>
+<input id="nome" placeholder="Nome completo">
+<input id="cpf" placeholder="CPF">
+<input id="telefone" placeholder="Telefone">
+<input id="email" placeholder="Email">
+
+<button class="btn-gerar" onclick="gerarContrato()">Gerar Contrato</button>
+<button class="btn-pdf" onclick="gerarPDF()">Baixar PDF</button>
+
+<div id="contrato"></div>
+
+</div>
+
+<script>
+function gerarContrato() {
+  const data = new Date();
+  const dataFormatada = data.toLocaleString('pt-BR');
+
+  const razao = document.getElementById('razao').value;
+  const cnpj = document.getElementById('cnpj').value;
+  const endereco = document.getElementById('endereco').value;
+
+  const nome = document.getElementById('nome').value;
+  const cpf = document.getElementById('cpf').value;
+  const telefone = document.getElementById('telefone').value;
+  const email = document.getElementById('email').value;
+
+  document.getElementById('contrato').innerHTML = `
+  <h3 style="text-align:center;">CONTRATO DE CONSIGNAÇÃO MERCANTIL</h3>
+
+  <p><strong>CONSIGNANTE:</strong> SCHNEIDER COMÉRCIO DE BEBIDAS LTDA, inscrita no CNPJ 63.626.734/0001-09.</p>
+
+  <p><strong>CONSIGNATÁRIO:</strong> ${razao}, inscrita no CNPJ ${cnpj}, com sede em ${endereco}.</p>
+
+  <p><strong>RESPONSÁVEL LEGAL:</strong> ${nome}, inscrito no CPF ${cpf}, telefone ${telefone}, e-mail ${email}.</p>
+
+  <p><strong>CLÁUSULA 1 – OBJETO:</strong> O presente contrato tem como objeto a consignação de bebidas para comercialização.</p>
+
+  <p><strong>CLÁUSULA 2 – PAGAMENTO:</strong> O consignatário pagará apenas pelos produtos efetivamente vendidos.</p>
+  <p>Na primeira operação, será pago 50% do valor da carga inicial.</p>
+  <p>Nas reposições seguintes, o pagamento será referente somente aos produtos vendidos.</p>
+
+  <p><strong>CLÁUSULA 3 – CONTROLE DE LOTE E VALIDADE:</strong> Todos os produtos serão entregues com controle de lote e validade.</p>
+  <p>Produtos vencidos não serão aceitos para devolução, sendo caracterizada tentativa de fraude ou má conservação.</p>
+
+  <p><strong>CLÁUSULA 4 – RESPONSABILIDADE:</strong> O consignatário é responsável pela guarda, conservação e integridade dos produtos.</p>
+
+  <p><strong>DATA E HORA:</strong> ${dataFormatada}</p>
+
+  <br><br>
+  <p>_____________________________________<br>CONSIGNANTE</p>
+  <br>
+  <p>_____________________________________<br>CONSIGNATÁRIO</p>
+  `;
+}
+
+function gerarPDF() {
+  gerarContrato();
+  setTimeout(() => {
+    window.print();
+  }, 300);
+}
+</script>
+
+</body>
+</html>
